@@ -157,10 +157,10 @@
 
     <div class="heart-bg" id="heartBg"></div>
 
-    <img src="imagem1.jpg" id="imgTela1" class="topo-direito-img" alt="Foto 1">
-    <img src="imagem2.jpg" id="imgTela2" class="topo-direito-img hidden" alt="Foto 2">
-    <img src="imagem3.jpg" id="imgTela3" class="topo-direito-img hidden" alt="Foto 3">
-    <img src="imagem4.jpg" id="imgTela6" class="topo-direito-img hidden" alt="Foto 4">
+    <img src="imagem1.jpg" id="imgTela1" class="topo-direito-img" alt="Foto 1" onerror="if (this.src.indexOf('.jpg') !== -1) this.src=this.src.replace('.jpg', '.JPG');">
+    <img src="imagem2.jpg" id="imgTela2" class="topo-direito-img hidden" alt="Foto 2" onerror="if (this.src.indexOf('.jpg') !== -1) this.src=this.src.replace('.jpg', '.JPG');">
+    <img src="imagem3.jpg" id="imgTela3" class="topo-direito-img hidden" alt="Foto 3" onerror="if (this.src.indexOf('.jpg') !== -1) this.src=this.src.replace('.jpg', '.JPG');">
+    <img src="imagem4.jpg" id="imgTela6" class="topo-direito-img hidden" alt="Foto 4" onerror="if (this.src.indexOf('.jpg') !== -1) this.src=this.src.replace('.jpg', '.JPG');">
 
     <div id="tela1" class="card">
         <p class="p-principal">feliz dia dos namorados, xuxuzinho 🩷</p>
@@ -171,7 +171,7 @@
 
     <div id="tela2" class="card hidden">
         <p class="p-principal">hoje é um belo dia e vai ser 2x melhor com você</p>
-        <p class="p-secundario">malandro touchscrean 🎵 música no Spotify pq eu não aprendi a por aqui </p>
+        <p class="p-secundario">música no Spotify: malandro touchscrean 🎵</p>
         <div class="btn-container">
             <div class="btn-row">
                 <button onclick="mudarTela('tela2', 'tela3')">Vamos nos encontrar!</button>
@@ -208,7 +208,7 @@
     </div>
 
     <div id="tela6" class="card hidden">
-        <p class="p-principal">TE AMO NEEEEEEEERD ☝🏽🤓🩷</p>
+        <p class="p-principal">TE AMO, NEEEEEEEEEERD ☝🏽🤓🩷</p>
         <p class="p-secundario" id="resumoEncontro"></p>
     </div>
 
@@ -240,7 +240,6 @@
             document.getElementById(atual).classList.add('hidden');
             document.getElementById(proxima).classList.remove('hidden');
 
-            // Controle de troca das imagens laterais
             if (proxima === 'tela2') {
                 document.getElementById('imgTela1').classList.add('hidden');
                 document.getElementById('imgTela2').classList.remove('hidden');
@@ -251,14 +250,12 @@
                 document.getElementById('imgTela3').classList.add('hidden');
                 document.getElementById('imgTela6').classList.remove('hidden');
                 
-                // Chuva intensa e rápida de corações na tela final
                 totalHearts = 65;
                 speedMultiplier = 2.8; 
                 criarCoracoes();
             }
         }
 
-        // Função que faz o botão mudar de posição na tela
         function fugir(botao) {
             const larguraJanela = window.innerWidth - botao.offsetWidth;
             const alturaJanela = window.innerHeight - botao.offsetHeight;
@@ -276,13 +273,22 @@
         function salvarData() {
             const inputData = document.getElementById('dataEncontro').value;
             if (!inputData) {
-                alert("Escolha o horário para eu me arrumar! 🥰");
+                alert("Escolha o horário para nos encontrarmos!🥰");
                 return;
             }
             const dataObjeto = new Date(inputData);
             dataSalva = dataObjeto.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}) + " às " + dataObjeto.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) + "h";
             mudarTela('tela3', 'tela4');
         }
+
+        // Se por algum motivo o link quebrar de novo, tenta carregar trocando por maiúscula também
+        document.querySelectorAll('.topo-direito-img').forEach(img => {
+            img.addEventListener('error', function() {
+                if(this.src.includes('.jpg')) {
+                    this.src = this.src.replace('.jpg', '.JPG');
+                }
+            });
+        });
 
         function escolherRoteiro(opcao) {
             document.getElementById('resumoEncontro').innerHTML = `Nosso encontro está marcado para o dia <b>${dataSalva}</b> com direito a <b>${opcao}</b>!`;
