@@ -15,7 +15,7 @@
         }
 
         body {
-            background-color: #ffb3c6; /* Layout inteiramente rosa */
+            background-color: #ffb3c6;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,7 +25,6 @@
             position: relative;
         }
 
-        /* Corações rosa subindo continuamente */
         .heart-bg {
             position: absolute;
             top: 0;
@@ -50,7 +49,6 @@
             100% { transform: translateY(-105vh) translateX(50px) rotate(360deg); opacity: 0; }
         }
 
-        /* Imagens menores no canto superior direito fora do quadro */
         .topo-direito-img {
             position: fixed;
             top: 20px;
@@ -63,22 +61,20 @@
             transition: transform 0.2s;
         }
 
-        /* Quadrado destacado no centro */
         .card {
-            background-color: #ff4d6d; /* Rosa mais escuro destacado */
+            background-color: #ff4d6d;
             padding: 35px;
-            border-radius: 20px; /* Laterais levemente arredondadas */
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Destaque por sombreamento */
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             max-width: 450px;
             width: 90%;
             transition: all 0.3s ease;
             z-index: 10;
-            color: white; /* Letras brancas */
+            color: white;
         }
 
         .hidden { display: none !important; }
 
-        /* Regras de tamanho de fonte: Primeiro parágrafo sempre maior */
         .p-principal {
             font-size: 1.6rem;
             font-weight: 700;
@@ -94,7 +90,6 @@
             line-height: 1.5;
         }
 
-        /* Botões */
         .btn-container {
             display: flex;
             flex-direction: column;
@@ -129,7 +124,6 @@
             background-color: #fff0f3;
         }
 
-        /* Classe especial dos botões que fogem */
         .btn-fugiao {
             background-color: #ffe5ec;
             color: #ff4d6d;
@@ -137,31 +131,16 @@
             z-index: 20;
             transition: none !important;
         }
-
-        /* Selecionável de Data e Hora */
-        input[type="datetime-local"] {
-            padding: 12px;
-            border: 2px solid white;
-            border-radius: 25px;
-            margin-bottom: 25px;
-            font-size: 1rem;
-            color: #ff4d6d;
-            background-color: white;
-            font-weight: 600;
-            outline: none;
-            width: 100%;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 
     <div class="heart-bg" id="heartBg"></div>
 
-    <img src="imagem1.jpg" id="imgTela1" class="topo-direito-img" alt="Foto 1" onerror="tentarFormatos(this, 'imagem1')">
-    <img src="imagem2.jpg" id="imgTela2" class="topo-direito-img hidden" alt="Foto 2" onerror="tentarFormatos(this, 'imagem2')">
-    <img src="imagem3.jpg" id="imgTela3" class="topo-direito-img hidden" alt="Foto 3" onerror="tentarFormatos(this, 'imagem3')">
-    <img src="imagem4.jpg" id="imgTela6" class="topo-direito-img hidden" alt="Foto 4" onerror="tentarFormatos(this, 'imagem4')">
+    <img id="imgTela1" class="topo-direito-img" alt="Foto 1">
+    <img id="imgTela2" class="topo-direito-img hidden" alt="Foto 2">
+    <img id="imgTela3" class="topo-direito-img hidden" alt="Foto 3">
+    <img id="imgTela6" class="topo-direito-img hidden" alt="Foto 4">
 
     <div id="tela1" class="card">
         <p class="p-principal">feliz dia dos namorados, xuxuzinho 🩷</p>
@@ -182,18 +161,18 @@
     </div>
 
     <div id="tela3" class="card hidden">
-        <p class="p-principal">sabia que escolheria certo! Você é tão esperto</p>
-        <p class="p-secundario">selecione data e hora do encontro após o trabalho 👇🏽</p>
-        <input type="datetime-local" id="dataEncontro">
+        <p class="p-principal">Sabia que escolheria certo! 😈</p>
+        <p class="p-secundario">Como você já descobriu nosso horário antes da hora... agora precisa aceitar os termos e condições do nosso encontro! 👇🏽</p>
         <div class="btn-container">
-            <button onclick="salvarData()">Confirmar data 🗓️</button>
+            <button onclick="mudarTela('tela3', 'tela4')">Ver os termos 📜</button>
         </div>
     </div>
 
     <div id="tela4" class="card hidden">
-        <p class="p-principal">ebaa, te espero babando igual quiabo rs</p>
+        <p class="p-principal">Termos de Compromisso:</p>
+        <p class="p-secundario">Regra 1: Me encher de beijos ao chegar.<br>Regra 2: Ir bem lindo (eu vou estar impecável).<br>Regra 3: Te espero babando igual quiabo rs. Aceita?</p>
         <div class="btn-container">
-            <button onclick="mudarTela('tela4', 'tela5')">Escolha de roteiro ☝🏽</button>
+            <button onclick="mudarTela('tela4', 'tela5')">Aceito com certeza! 🥰</button>
         </div>
     </div>
 
@@ -218,22 +197,12 @@
         let totalHearts = 25;
         let speedMultiplier = 1;
 
-        // Tenta formatos alternativos caso a imagem quebre por causa de maiúsculas/minúsculas
-        const formatos = ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG'];
-        function tentarFormatos(imgElement, nomeBase) {
-            if (!imgElement.dataset.tentativa) {
-                imgElement.dataset.tentativa = "0";
-            }
-            let index = parseInt(imgElement.dataset.tentativa);
-            if (index < formatos.length) {
-                imgElement.dataset.tentativa = (index + 1).toString();
-                imgElement.src = nomeBase + formatos[index];
-            } else {
-                // Caso não ache nenhuma, coloca um emoji fofo de fallback no cantinho
-                imgElement.alt = "❤️";
-                imgElement.onerror = null;
-            }
-        }
+        // Forçador de atualização: Adiciona um código único temporal em cada imagem para driblar o cache do celular
+        const versaoUnica = new Date().getTime();
+        document.getElementById('imgTela1').src = "imagem1.jpg?v=" + versaoUnica;
+        document.getElementById('imgTela2').src = "imagem2.jpg?v=" + versaoUnica;
+        document.getElementById('imgTela3').src = "imagem3.jpg?v=" + versaoUnica;
+        document.getElementById('imgTela6').src = "imagem4.jpg?v=" + versaoUnica;
 
         function criarCoracoes() {
             heartBg.innerHTML = '';
@@ -287,20 +256,8 @@
             botao.style.top = novoY + 'px';
         }
 
-        let dataSalva = "";
-        function salvarData() {
-            const inputData = document.getElementById('dataEncontro').value;
-            if (!inputData) {
-                alert("Escolha o horário para eu me arrumar! 🥰");
-                return;
-            }
-            const dataObjeto = new Date(inputData);
-            dataSalva = dataObjeto.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}) + " às " + dataObjeto.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) + "h";
-            mudarTela('tela3', 'tela4');
-        }
-
         function escolherRoteiro(opcao) {
-            document.getElementById('resumoEncontro').innerHTML = `Nosso encontro está marcado para o dia <b>${dataSalva}</b> com direito a <b>${opcao}</b>!`;
+            document.getElementById('resumoEncontro').innerHTML = `Nosso encontro romântico está confirmadíssimo com direito a <b>${opcao}</b>!`;
             mudarTela('tela5', 'tela6');
         }
     </script>
