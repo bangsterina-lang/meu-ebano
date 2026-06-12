@@ -197,11 +197,12 @@
         let totalHearts = 25;
         let speedMultiplier = 1;
 
-        // COLOQUE OS LINKS DAS SUAS FOTOS AQUI DENTRO DAS ASPAS:
-        document.getElementById('imgTela1').src = "COLE_O_LINK_DA_FOTO_1_AQUI";
-        document.getElementById('imgTela2').src = "COLE_O_LINK_DA_FOTO_2_AQUI";
-        document.getElementById('imgTela3').src = "COLE_O_LINK_DA_FOTO_3_AQUI";
-        document.getElementById('imgTela6').src = "COLE_O_LINK_DA_FOTO_4_AQUI";
+        // Forçador de atualização: Adiciona um código único temporal em cada imagem para driblar o cache do celular
+        const versaoUnica = new Date().getTime();
+        document.getElementById('imgTela1').src = "imagem1.jpg?v=" + versaoUnica;
+        document.getElementById('imgTela2').src = "imagem2.jpg?v=" + versaoUnica;
+        document.getElementById('imgTela3').src = "imagem3.jpg?v=" + versaoUnica;
+        document.getElementById('imgTela6').src = "imagem4.jpg?v=" + versaoUnica;
 
         function criarCoracoes() {
             heartBg.innerHTML = '';
